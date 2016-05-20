@@ -425,9 +425,3 @@ function animate()
 		
 		updatefps(elapsed,"fps");
 }
-
-function tick() {
-    requestAnimFrame(tick);
-    drawScene();
-    animate();
-}
