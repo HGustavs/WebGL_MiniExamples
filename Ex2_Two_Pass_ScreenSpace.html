@@ -9,8 +9,9 @@
 <script type="text/javascript" src="webgl-helpers.js"></script>
 <!--<script type="text/javascript" src="eleph.js"></script>-->
 <!--<script type="text/javascript" src="sph.js"></script>-->
-
 <script type="text/javascript" src="teapot.js"></script>
+
+<script type="text/javascript" src="crypt.js"></script>
 
 <script id="shader-fs" type="x-shader/x-fragment">
     precision mediump float;
@@ -102,8 +103,6 @@
 
         shaderProgram.vertexPositionAttribute = gl.getAttribLocation(shaderProgram, "aVertexPosition");
         gl.enableVertexAttribArray(shaderProgram.vertexPositionAttribute);
-
-				alert(gl.getAttribLocation(shaderProgram, "aVertexNormal"));
 
         shaderProgram.vertexNormalAttribute = gl.getAttribLocation(shaderProgram, "aVertexNormal");
         gl.enableVertexAttribArray(shaderProgram.vertexNormalAttribute);

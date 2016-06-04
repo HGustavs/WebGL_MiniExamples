@@ -3,17 +3,20 @@
 		<script type="text/javascript" src="glMatrix-0.9.5.min.js"></script>
 		<script type="text/javascript" src="webgl-utils.js"></script>
 		<script type="text/javascript" src="webgl-helpers.js"></script>
-		<script type="text/javascript" src="eleph.js"></script>
-		<!--<script type="text/javascript" src="sph.js"></script>-->
+		<script type="text/javascript" src="crypt.js"></script>
 
 <!-- Pixel Shader -->
 
 <script id="shader-fs" type="x-shader/x-fragment">
 precision mediump float;
 
+varying vec3 vNormal;
+
 void main(void)
 {
-		gl_FragColor = vec4(0.8,0.6,0.3,1.0);
+	  vec3 N = normalize(vNormal);
+
+		gl_FragColor = vec4(vec3(N),1.0);
 }
 
 </script>
@@ -21,16 +24,21 @@ void main(void)
 <!-- Vertex Shader -->
 
 <script id="shader-vs" type="x-shader/x-vertex">
+varying vec3 vNormal;
 
 attribute vec3 aVertexPosition;
 attribute vec3 aVertexNormal;
 
 uniform mat4 uMVMatrix; 
 uniform mat4 uPMatrix; 
+uniform mat4 uNMatrix; 
 
 varying vec3 vColor;
 
 void main(void) {
+		// Normal
+		vNormal = (aVertexNormal.xyz+1.0)*0.5;
+
 		//Final vertex position
 		gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
 }
@@ -97,12 +105,12 @@ function drawScene()
 		gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 		
 		// For 3D
-		mat4.perspective(45, gl.viewportWidth / gl.viewportHeight, 0.1, 500.0, pMatrix);
+		mat4.perspective(80, gl.viewportWidth / gl.viewportHeight, 0.1, 500.0, pMatrix);
 		mat4.identity(mvMatrix);
 		
 		// Tumble Camera
 		mat4.set(moonRotationMatrix,mvMatrix);
-		mat4.translate(mvMatrix, [0, 0, -158]);
+		mat4.translate(mvMatrix, [0, 0, -1]);
 		
 		// --------------------------------------------------------------------------------
 		
